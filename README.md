@@ -49,8 +49,9 @@ Docker solves many challenges in software development and deployment:
    ```
 
    If it shows a version number, Docker is installed successfully.
+   ![docker run hello-world](version.png)
 
-4. Run your first test:
+5. Run your first test:
 
    ```bash
    docker run hello-world
@@ -92,7 +93,7 @@ They ensure **consistency** from development to production, whether on your lapt
 
 ---
 
-![Container vs VM](images/containers-vs-virtual-machines.png)
+![Container vs VM](Images/containers-vs-virtual-machines.png)
 ---
 
 ## Docker Images
