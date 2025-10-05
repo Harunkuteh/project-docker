@@ -56,23 +56,43 @@ Docker solves many challenges in software development and deployment:
    docker run hello-world
    ```
 
-   You should see a confirmation message from Docker.
+   You will see this message
 ![docker run hello-world](Images/hello-world.png)
 
 
 ## What is a Container?
 
-A **container** is a lightweight, isolated environment where an application runs with everything it needs (code, libraries, runtime).
+A **container** is a **lightweight, isolated environment** where an application runs with everything it needs (code, libraries, runtime).  
+This makes the application **portable, consistent, and easy to run** on any system.
 
-**Analogy**: A container is like a lunchbox — it contains the entire meal (application + dependencies) so you can eat it anywhere, without needing a full kitchen.
+---
 
-**Difference from Virtual Machines:**
+#### Simple Analogy
+Think of a **container as a lunchbox **:  
+It contains the **entire meal (application + dependencies)** so you can take it anywhere and eat it without needing a full kitchen.  
+No matter where you go, the food (application) remains the same.
 
-* **VM** → Heavy, requires an entire OS, slow startup.
-* **Container** → Lightweight, shares the host OS kernel, starts in seconds.
+---
 
-**Main Goal**: With containers, you can run apps without worrying about setup, OS differences, or missing dependencies.
+#### Difference Between Virtual Machines and Containers
 
+| Feature           | Virtual Machine (VM)    | Container (Docker)    |
+|-------------------|-------------------------|-----------------------|
+| OS                | Full guest OS required  | Shares host OS kernel |
+| Size              | Large (GBs)             | Small (MBs)           |
+| Startup Time      | Minutes                 | Seconds               |
+| Performance       | Heavier, more overhead  | Lightweight, efficient|
+| Isolation         | Strong (full OS level)  | Process-level isolation |
+
+---
+
+#### Main Goal
+With containers, you can run applications **without worrying about setup, OS differences, or missing dependencies**.  
+They ensure **consistency** from development to production, whether on your laptop, a server, or in the cloud.
+
+---
+
+![Container vs VM](images/containers-vs-virtual-machines.png)
 ---
 
 ## Docker Images
@@ -92,7 +112,7 @@ Command to pull an image:
 ```bash
 docker pull postgres:15
 ```
-
+![Images](Images/Images.png)
 ---
 
 ## What is Docker Compose?
@@ -115,25 +135,50 @@ docker-compose up -d
 
 ```yaml
 version: '3.9'
+
 services:
   postgres:
     image: postgres:15
+    container_name: postgres_db
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin123
       POSTGRES_DB: mydb
     ports:
       - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
   influxdb:
     image: influxdb:2.7
+    container_name: influxdb
+    environment:
+      INFLUXDB_ADMIN_USER: admin
+      INFLUXDB_ADMIN_PASSWORD: admin123
+      INFLUXDB_DB: mydb
     ports:
       - "8086:8086"
+    volumes:
+      - influxdb_data:/var/lib/influxdb2
 
   cassandra:
     image: cassandra:4.1
+    container_name: cassandra_db
+    environment:
+
+      CASSANDRA_CLUSTER_NAME: "MyCluster"
+      CASSANDRA_START_RPC: "true"
+      CASSANDRA_ENDPOINT_SNITCH: GossipingPropertyFileSnitch
     ports:
       - "9042:9042"
+    volumes:
+      - cassandra_data:/var/lib/cassandra
+
+volumes:
+  postgres_data:
+  influxdb_data:
+  cassandra_data:
+
 ```
 
 ---
@@ -225,4 +270,6 @@ Expected output:
 * **Images** → Templates used to create containers.
 * **Docker Compose** → Manages multiple containers with one file.
 * **Benefit** → Faster, portable, consistent, efficient development.
+
+
 
