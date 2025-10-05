@@ -57,7 +57,7 @@ Docker solves many challenges in software development and deployment:
    ```
 
    You should see a confirmation message from Docker.
-![docker run hello-world](images/hello-world.png)
+![docker run hello-world](Images/hello-world.png)
 
 
 ## What is a Container?
